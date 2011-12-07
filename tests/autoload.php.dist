@@ -6,13 +6,13 @@ if (file_exists($twig)) {
     Twig_Autoloader::register();
 }
 
-$pimple = __DIR__.'/../vendor/pimple/lib/Pimple.php';
-if (file_exists($pimple)) {
-    require_once $pimple;
-}
-
 spl_autoload_register(function($class) {
-    $namespaces = array('Knp\Menu\Tests' => __DIR__, 'Knp\Menu' => __DIR__.'/../src', 'Symfony' => __DIR__.'/../vendor/');
+    $namespaces = array(
+        'Knp\Invoice\Tests' => __DIR__,
+        'Knp\Invoice'       => __DIR__.'/../src',
+        'Symfony'           => __DIR__.'/../vendor/'
+    );
+
     $class = ltrim($class, '\\');
     foreach ($namespaces as $namespace => $dir) {
         if (0 === strpos($class, $namespace)) {

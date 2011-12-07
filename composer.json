@@ -6,7 +6,8 @@
     "authors": [
         {
             "name": "Józef Bielawski",
-            "email": "jozef.bielawski@knplabs.com"
+            "email": "jozef.bielawski@knplabs.com",
+            "homepage": "http://knplabs.com"
         }
     ],
     "repositories": {
@@ -27,11 +28,10 @@
     },
     "require": {
         "php": ">=5.3.2",
-        "symfony": ">2.0,<2.2-dev",
+        "symfony/class-loader": ">2.0,<2.2-dev",
         "twig/twig": ">=1.2"
     },
     "suggest": {
-        "silex/silex": "1.0.*",
         "knplabs/snappy": "*"
     },
     "autoload": {

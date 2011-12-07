@@ -6,7 +6,7 @@ Give you an ability, to generate html/pdf invoices.
 ```php
 <?php
 
-require_once __DIR__.'/tests/bootstrap.php';
+require_once __DIR__.'/src/autoload.php';
 
 $invoice = new Knp\Invoice\Model\Invoice();
 
@@ -26,4 +26,7 @@ for ($i = 0; $i < 5; $i++) {
 }
 
 $html = new Knp\Invoice\Generator\Twig;
-$html = $html->generate($invoice);
+$html->generate($invoice);
+//$html->save();
+
+echo $html;

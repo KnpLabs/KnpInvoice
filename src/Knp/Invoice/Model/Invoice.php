@@ -27,6 +27,11 @@ class Invoice
         $this->createdAt = new \DateTime('NOW');
     }
 
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
     public function getSeller()
     {
         return $this->seller;
@@ -60,6 +65,11 @@ class Invoice
             'netto'  => $toPay,
             'brutto' => $toPay + $tax
         );
+    }
+
+    public function setNumber($value)
+    {
+        $this->number = $value;
     }
 
     public function setDate($date)
