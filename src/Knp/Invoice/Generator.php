@@ -12,6 +12,10 @@ class Generator
 
     protected $theme = 'Resources/views/simple_theme';
 
+    static protected $templates = array(
+        'invoice', 'list'
+    );
+
     public function setTheme($theme)
     {
         if (!is_string($theme)) {
@@ -23,12 +27,12 @@ class Generator
         $this->theme = $theme;
     }
 
-    public function generate(Invoice $invoice)
+    public function generate(Invoice $invoice, $template = 'invoice')
     {
         throw new \RuntimeException();
     }
 
-    public function generateAndSave(Invoice $invoice, $filename = null)
+    public function generateAndSave(Invoice $invoice, $filename = null, $template = 'invoice')
     {
         throw new \RuntimeException();
     }
@@ -40,5 +44,12 @@ class Generator
         }
 
         return $this->content;
+    }
+
+    protected function checkTemplate($template)
+    {
+        if (!in_array($template, self::$templates)) {
+            throw new \InvalidArgumentException('Unknown template name given!');
+        }
     }
 }

@@ -21,16 +21,16 @@ class Snappy extends Twig
         parent::__construct();
     }
 
-    public function generate(Invoice $invoice)
+    public function generate(Invoice $invoice, $template = 'invoice')
     {
-        parent::generate($invoice);
+        parent::generate($invoice, $template);
 
         $this->_generate();
     }
 
-    public function generateAndSave(Invoice $invoice, $filename = null)
+    public function generateAndSave(Invoice $invoice, $filename = null, $template = 'invoice')
     {
-        parent::generate($invoice);
+        parent::generate($invoice, $template);
 
         $this->_generate($filename);
     }

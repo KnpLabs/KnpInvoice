@@ -40,6 +40,7 @@ for ($i = 0; $i < 5; $i++) {
 
 $html = new Knp\Invoice\Generator\Twig;
 $html->generate($invoice);
+// $html->generate($invoice, null, 'list'); # generate just list of entries
 
 echo $html;// $html->generateAndSave($invoice); # or use to generate and save invoice
 ```
