@@ -65,8 +65,9 @@ class Invoice
             $netto  += $entry->getTotalPrice();
             $brutto += $entry->getTotalPriceWithTax();
 
-            $tmp  = $entry->getTax();
-            $taxes[$tmp->getName()] = $tmp->getValue();
+            foreach ($entry->getTax() as $tax) {
+                $taxes[$tax->getName()] = $tax->getValue();
+            }
         }
 
         return array(

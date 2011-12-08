@@ -29,11 +29,20 @@ $invoice->setCoupon($coupon);
 
 $invoice->setPaidAmount(100);
 
+$taxTPS = new Knp\Invoice\Model\Tax;
+$taxTPS->setName('TPS');
+$taxTPS->setValue(5);
+
+$taxTVQ = new Knp\Invoice\Model\Tax('TVQ', 8);
+
 for ($i = 0; $i < 5; $i++) {
     $entry = new Knp\Invoice\Model\Entry();
     $entry->setDescription('Development ' . mt_rand(1, 9));
     $entry->setUnitPrice(mt_rand(100, 500));
     $entry->setQuantity(mt_rand(1, 4));
+
+    $entry->addTax($taxTPS);
+    $entry->addTax($taxTVQ);
 
     $invoice->addEntry($entry);
 }

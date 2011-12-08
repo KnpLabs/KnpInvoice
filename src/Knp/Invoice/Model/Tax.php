@@ -8,6 +8,12 @@ class Tax
 
     protected $value = 0;
 
+    public function __construct($name = null, $value = 0)
+    {
+        $this->name = $name;
+        $this->setValue($value);
+    }
+
     public function getName()
     {
         return $this->name;

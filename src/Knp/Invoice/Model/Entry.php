@@ -4,13 +4,18 @@ namespace Knp\Invoice\Model;
 
 class Entry
 {
-    protected $tax;
+    protected $taxes;
 
     protected $description;
 
     protected $unit_price;
 
     protected $quantity = 1;
+
+    public function  __construct()
+    {
+        $this->taxes = array();
+    }
 
     public function getDescription()
     {
@@ -24,7 +29,12 @@ class Entry
 
     public function getTotalPriceWithTax()
     {
-        return $this->quantity * ($this->unit_price + ($this->unit_price * $this->getTax()->getValue() / 100));
+        $brutto = 0;
+        foreach ($this->getTax() as $tax) {
+            $brutto += $this->unit_price * $tax->getValue() / 100;
+        }
+
+        return $this->quantity * ($this->unit_price + $brutto);
     }
 
     public function getUnitPrice()
@@ -39,7 +49,7 @@ class Entry
 
     public function getTax()
     {
-        return $this->tax ?: new Tax;
+        return $this->taxes ?: array(new Tax);
     }
 
     public function setUnitPrice($price)
@@ -47,9 +57,13 @@ class Entry
         $this->unit_price = (float) $price;
     }
 
-    public function setTax(Tax $tax)
+    public function addTax(Tax $tax)
     {
-        $this->tax = $tax;
+        if (count($this->taxes) == 2) {
+            throw new \OutOfBoundsException();
+        }
+
+        $this->taxes[] = $tax;
     }
 
     public function setQuantity($quantity)
