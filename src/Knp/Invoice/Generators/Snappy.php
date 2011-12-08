@@ -12,8 +12,12 @@ class Snappy extends Twig
 
     public function __construct($binLocation = '/usr/local/bin/wkhtmltopdf')
     {
-        if (!file_exists('/usr/local/bin/wkhtmltopdf')) {
-            throw new \RuntimeException();
+        if (!class_exists('Knp\Snappy\Pdf')) {
+            throw new \RuntimeException('Snappy library is required!');
+        }
+
+        if (!file_exists($binLocation)) {
+            throw new \RuntimeException('Binary `wkhtmltopdf` not found.');
         }
 
         $this->binLocation = $binLocation;

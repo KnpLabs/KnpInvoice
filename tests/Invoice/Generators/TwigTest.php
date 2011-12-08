@@ -8,8 +8,8 @@ class TwigTest extends \PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        if (!class_exists('Twig_Environment', false)) {
-            $this->markTestSkipped('Twig library is required to run this test.');
+        if (!class_exists('Twig_Environment')) {
+            $this->markTestSkipped('Twig is not available.');
         }
     }
 
@@ -18,7 +18,7 @@ class TwigTest extends \PHPUnit_Framework_TestCase
      */
     public function testWhatCheckTemplateAllows()
     {
-        $generator = new Knp\Invoice\Generators\Twig;
-        $generator->generate(new Invoice());
+        $generator = new Twig;
+        $generator->generate(new Invoice(), 'dummy');
     }
 }

@@ -9,7 +9,7 @@ class Twig extends Generator
 {
     public function __construct()
     {
-        if (class_exists('Twig_Environment', false)) {
+        if (!class_exists('Twig_Environment')) {
             throw new \RuntimeException('Twig library is required!');
         }
 
