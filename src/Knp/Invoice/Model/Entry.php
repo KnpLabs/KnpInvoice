@@ -17,14 +17,14 @@ class Entry
         return $this->description;
     }
 
-    public function getPrice()
-    {
-        return $this->unit_price;
-    }
-
     public function getTotalPrice()
     {
-        return $this->unit_price + ($this->unit_price * $this->tax->getValue());
+        return $this->quantity * $this->unit_price;
+    }
+
+    public function getTotalPriceWithTax()
+    {
+        return $this->quantity * ($this->unit_price + ($this->unit_price * $this->tax->getValue()));
     }
 
     public function getUnitPrice()

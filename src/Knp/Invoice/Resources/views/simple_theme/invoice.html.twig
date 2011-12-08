@@ -45,14 +45,14 @@
         </dl>
 
         <dl class="invoice-total">
-            <dd>{{ invoice.total.brutto - invoice.paid|default('0.00') }}</dd>
+            <dd>{{ invoice.total.amount }}</dd>
             <dt>Amount Due</dt>
         </dl>
     </div>
 
     {%- if invoice.buyer is not empty %}
     <div id="buyer">
-        {{ invoice.buyer.name }}
+        {{- invoice.buyer.name }}
     </div>
     {%- endif %}
 
@@ -74,7 +74,7 @@
                 <td>{{ entry.description }}</td>
                 <td>{{ entry.price }}</td>
                 <td>{{ entry.quantity }}</td>
-                <td>{{ entry.quantity * entry.price }}</td>
+                <td>{{ entry.totalPrice }}</td>
             </tr>
             {%- endfor %}
         </tbody>
@@ -85,8 +85,13 @@
             <dt>Subtotal</dt>
             <dd>{{ invoice.total.netto }}</dd>
 
-            <dt>{{ invoice.tax.name|default('TVA 0%') }}</dt>
-            <dd>{{ invoice.tax.value|default(0) }}</dd>
+        {%- for tax in invoice.total.taxes %}
+            <dt>{{ tax.name }}</dt>
+            <dd>{{ tax.value }}</dd>
+        {%- else %}
+            <dt>TVA 0%</dt>
+            <dd>0</dd>
+        {%- endfor %}
         </dl>
 
         <dl>

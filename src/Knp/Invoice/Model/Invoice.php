@@ -57,19 +57,24 @@ class Invoice
 
     public function getTotal()
     {
-        $tax   = 0;
-        $toPay = 0;
+        $netto  = 0;
+        $brutto = 0;
+        $taxes  = array();
         foreach ($this->entries as $entry) {
-            $toPay += $entry->getPrice();
-            $tax   += $entry->getTax()->getValue();
+            $netto  += $entry->getTotalPrice();
+            $brutto += $entry->getTotalPriceWithTax();
+
+            $tmp  = $entry->getTax();
+            $taxes[$tmp->getName()] = $tmp->getValue();
         }
 
-        $toPay -= ($this->coupon ? $this->coupon->getValue() : 0);
+        $brutto -= ($this->coupon ? $this->coupon->getValue() : 0);
 
         return array(
-            'netto'  => $toPay,
-            'brutto' => $toPay + $tax,
-            'amount' => ($toPay + $tax) - $this->paidAmount
+            'netto'  => $netto,
+            'brutto' => $brutto,
+            'amount' => $brutto - $this->paidAmount,
+            'taxes'  => $taxes
         );
     }
 
