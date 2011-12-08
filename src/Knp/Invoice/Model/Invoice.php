@@ -4,7 +4,7 @@ namespace Knp\Invoice\Model;
 
 class Invoice
 {
-    protected $number;
+    protected $number = '0000001';
 
     protected $seller;
 
