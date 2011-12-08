@@ -11,10 +11,22 @@ require_once __DIR__.'/src/autoload.php';
 $invoice = new Knp\Invoice\Model\Invoice();
 
 $seller = new Knp\Invoice\Model\Seller();
-$seller->setName('KnpLabs');
-$seller->setAddress('Słowackiego 17', 'Łowicz', '99-400');
+$seller->setName('KnpLabs France');
+$seller->setAddress('11 RUE KERVEGAN', 'NANTES', '44000', 'France');
 
 $invoice->setSeller($seller);
+
+$buyer = new Knp\Invoice\Model\Buyer();
+$buyer->setName('Józef Bielawski');
+$buyer->setAddress('Słowackiego 17', 'Łowicz', '99-400', 'Poland');
+
+$invoice->setBuyer($buyer);
+
+$coupon = new Knp\Invoice\Model\Coupon;
+$coupon->setName('Christmas Holidays');
+$coupon->setValue(66.6);
+$invoice->setCoupon($coupon);
+
 $invoice->setPaidAmount(100);
 
 for ($i = 0; $i < 5; $i++) {

@@ -14,11 +14,13 @@ abstract class Client
     protected $company_address_street;
     protected $company_address_city;
     protected $company_address_zipcode;
+    protected $company_address_country;
 
     protected $company_other_name;
     protected $company_other_address_street;
     protected $company_other_address_city;
     protected $company_other_address_zipcode;
+    protected $company_other_address_country;
 
     public function setName($name)
     {
@@ -40,11 +42,12 @@ abstract class Client
         $this->company_name = $name;
     }
 
-    public function setAddress($street, $city, $zipcode)
+    public function setAddress($street, $city, $zipcode, $country)
     {
         $this->company_address_street  = $street;
         $this->company_address_city    = $city;
         $this->company_address_zipcode = $zipcode;
+        $this->company_address_country = $country;
     }
 
     public function getName()
@@ -54,5 +57,15 @@ abstract class Client
         }
 
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function getAddress()
+    {
+        return array(
+            'street'  => $this->company_address_street,
+            'city'    => $this->company_address_city,
+            'zipcode' => $this->company_address_zipcode,
+            'country' => $this->company_address_country
+        );
     }
 }

@@ -68,12 +68,10 @@ class Invoice
             $taxes[$tmp->getName()] = $tmp->getValue();
         }
 
-        $brutto -= ($this->coupon ? $this->coupon->getValue() : 0);
-
         return array(
             'netto'  => $netto,
             'brutto' => $brutto,
-            'amount' => $brutto - $this->paidAmount,
+            'amount' => $brutto - ($this->coupon ? $this->coupon->getValue() : 0) - $this->paidAmount,
             'taxes'  => $taxes
         );
     }

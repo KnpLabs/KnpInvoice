@@ -26,13 +26,23 @@
     table thead th {border-top: 1px solid #f1f1f1;background:#e3e3e3}
     
     table tbody tr {padding: 10px 5px;border-bottom:1px solid #e5e5e5;}
+
+    .col1 {width: 20%; text-align: left}
+    .col2 {width: 50%; text-align: left}
+    .col3 {}
+    .col4 {}
+    .col5 {}
+    .col3, .col4, .col5 {width: 10%; text-align: right}
 </style>
 
 <body>
 
 <div id="container">
     <div id="seller">
-        {{- invoice.seller.name }}
+        <p>{{- invoice.seller.name }}</p>
+        {%- for item in invoice.seller.address %}
+            <p>{{- item }}</p>
+        {%- endfor %}
     </div>
 
     <div id="invoice">
@@ -45,14 +55,17 @@
         </dl>
 
         <dl class="invoice-total">
-            <dd>{{ invoice.total.amount }}</dd>
+            <dd>&euro; {{ invoice.total.amount }} EUR</dd>
             <dt>Amount Due</dt>
         </dl>
     </div>
 
     {%- if invoice.buyer is not empty %}
     <div id="buyer">
-        {{- invoice.buyer.name }}
+        <p>{{- invoice.buyer.name }}</p>
+        {%- for item in invoice.buyer.address %}
+        <p>{{- item }}</p>
+        {%- endfor %}
     </div>
     {%- endif %}
 
@@ -72,9 +85,9 @@
             <tr>
                 <td>#{{ loop.index }}</td>
                 <td>{{ entry.description }}</td>
-                <td>{{ entry.price }}</td>
-                <td>{{ entry.quantity }}</td>
-                <td>{{ entry.totalPrice }}</td>
+                <td class="col3">{{ entry.unitPrice }}</td>
+                <td class="col4">{{ entry.quantity }}</td>
+                <td class="col5">{{ entry.totalPrice }}</td>
             </tr>
             {%- endfor %}
         </tbody>
@@ -82,12 +95,12 @@
 
     <div id="invoice-total">
         <dl>
-            <dt>Subtotal</dt>
-            <dd>{{ invoice.total.netto }}</dd>
+            <dt><strong>Subtotal</strong></dt>
+            <dd><strong>{{ invoice.total.netto }}</strong></dd>
 
         {%- for tax in invoice.total.taxes %}
-            <dt>{{ tax.name }}</dt>
-            <dd>{{ tax.value }}</dd>
+            <dt>{{ tax.name|default('TVA 0%') }}</dt>
+            <dd>{{ tax.value|default(0) }}</dd>
         {%- else %}
             <dt>TVA 0%</dt>
             <dd>0</dd>
@@ -95,8 +108,13 @@
         </dl>
 
         <dl>
-            <dt>Total</dt>
-            <dd>{{ invoice.total.brutto }}</dd>
+            <dt><strong>Total</strong></dt>
+            <dd><strong>{{ invoice.total.brutto }}</strong></dd>
+
+        {%- if invoice.coupon is not empty %}
+            <dt>Coupon used</dt>
+            <dd>{{ invoice.coupon.name }} (-{{ invoice.coupon.value }})</dd>
+        {%- endif %}
 
             <dt>Amount Paid</dt>
             <dd>-{{ invoice.paid|default('0.00') }}</dd>
@@ -104,7 +122,7 @@
 
         <dl class="invoice-total">
             <dt>Amount Due</dt>
-            <dd>{{ invoice.total.amount }}</dd>
+            <dd>&euro; {{ invoice.total.amount }} EUR</dd>
         </dl>
     </div>
 

@@ -19,7 +19,7 @@ class Twig extends Generator
     {
         $this->filename = $invoice->getNumber();
         $this->content  = $this->generator->render(
-            file_get_contents($this->theme.'/invoice.html.twig'),
+            file_get_contents(__DIR__.'/../'.$this->theme.'/invoice.html.twig'),
             array(
                 'invoice' => $invoice
             )

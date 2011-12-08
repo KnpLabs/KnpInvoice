@@ -1,5 +1,9 @@
 <?php
 
+require 'Twig/Autoloader.php';
+
+Twig_Autoloader::register();
+
 /**
  * Simple autoloader that follow the PHP Standards Recommendation #0 (PSR-0)
  * @see https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md for more informations.
@@ -8,7 +12,7 @@
  * @see https://wiki.php.net/rfc/splclassloader#example_implementation
  */
 spl_autoload_register(function($className) {
-    $package = 'Knp\\Snappy';
+    $package = 'Knp\\';
     $className = ltrim($className, '\\');
     if (0 === strpos($className, $package)) {
         $fileName = __DIR__ . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $className) . '.php';
