@@ -14,7 +14,7 @@ class Invoice
 
     protected $paidAmount;
 
-    protected $entries = array();
+    protected $entries;
 
     protected $createdAt;
 
@@ -22,6 +22,7 @@ class Invoice
 
     public function __construct()
     {
+        $this->entries   = array();
         $this->createdAt = new \DateTime('NOW');
     }
 

@@ -104,9 +104,9 @@
             <dt><strong>Subtotal</strong></dt>
             <dd><strong>{{ invoice.total.netto }}</strong></dd>
 
-        {%- for tax in invoice.total.taxes %}
-            <dt>{{ tax.name|default('TVA 0%') }}</dt>
-            <dd>{{ tax.value|default(0) }}</dd>
+        {%- for tax, value in invoice.total.taxes %}
+            <dt>{{ tax|default('TVA 0%') }}</dt>
+            <dd>{{ value|default(0) }}</dd>
         {%- else %}
             <dt>TVA 0%</dt>
             <dd>0</dd>

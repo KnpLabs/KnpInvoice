@@ -24,7 +24,7 @@ class Entry
 
     public function getTotalPriceWithTax()
     {
-        return $this->quantity * ($this->unit_price + ($this->unit_price * $this->getTax()->getValue()));
+        return $this->quantity * ($this->unit_price + ($this->unit_price * $this->getTax()->getValue() / 100));
     }
 
     public function getUnitPrice()
