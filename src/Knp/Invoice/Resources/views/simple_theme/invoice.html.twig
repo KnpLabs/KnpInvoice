@@ -47,7 +47,7 @@
 
     <div id="invoice">
         <dl>
-            <dd>{{ invoice.number|default('0000001') }}</dd>
+            <dd>{{ invoice.number }}</dd>
             <dt>Facture #</dt>
 
             <dd>{{ invoice.createdAt|date('F j, Y') }}</dd>
@@ -92,6 +92,8 @@
             {%- endfor %}
         </tbody>
     </table>
+
+    <hr>
 
     <div id="invoice-total">
         <dl>

@@ -9,7 +9,8 @@ if (file_exists($twig)) {
 spl_autoload_register(function($class) {
     $namespaces = array(
         'Knp\Invoice\Tests' => __DIR__,
-        'Knp\Invoice'       => __DIR__.'/../src',
+        'Knp\Invoice'       => __DIR__.'/../src/',
+        'Knp\Snappy'        => __DIR__.'/../vendor/',
         'Symfony'           => __DIR__.'/../vendor/'
     );
 

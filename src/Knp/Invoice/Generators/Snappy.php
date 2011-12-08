@@ -3,6 +3,7 @@
 namespace Knp\Invoice\Generators;
 
 use Knp\Invoice\Generator;
+use Knp\Invoice\Model\Invoice;
 use Knp\Snappy\Pdf;
 
 class Snappy extends Twig
@@ -27,17 +28,19 @@ class Snappy extends Twig
         $this->_generate();
     }
 
-    public function save($filename = null)
+    public function generateAndSave(Invoice $invoice, $filename = null)
     {
-        if (empty($this->content)) {
-            throw new \BadFunctionCallException('You need to call `generate()` function first!');
-        }
+        parent::generate($invoice);
 
         $this->_generate($filename);
     }
 
     public function __toString()
     {
+        if (!$this->content) {
+            throw new \RuntimeException('You need to call `generate()` function first!');
+        }
+
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="'.$this->filename.'.pdf"');
 

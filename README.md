@@ -40,6 +40,19 @@ for ($i = 0; $i < 5; $i++) {
 
 $html = new Knp\Invoice\Generator\Twig;
 $html->generate($invoice);
-//$html->save();
 
-echo $html;
+echo $html;// $html->generateAndSave($invoice); # or use to generate and save invoice
+```
+
+Launch the Test Suite
+=====================
+
+```bash
+bin/vendors.sh
+```
+
+Then just call
+
+```bash
+phpunit -c
+```
