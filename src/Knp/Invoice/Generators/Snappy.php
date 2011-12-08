@@ -37,12 +37,10 @@ class Snappy extends Twig
 
     public function __toString()
     {
-        if (!$this->content) {
-            throw new \RuntimeException('You need to call `generate()` function first!');
+        if ($this->content) {
+            header('Content-Type: application/pdf');
+            header('Content-Disposition: attachment; filename="'.$this->filename.'.pdf"');
         }
-
-        header('Content-Type: application/pdf');
-        header('Content-Disposition: attachment; filename="'.$this->filename.'.pdf"');
 
         return $this->content;
     }

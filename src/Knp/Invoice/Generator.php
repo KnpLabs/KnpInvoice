@@ -39,10 +39,6 @@ class Generator
 
     public function __toString()
     {
-        if (!$this->content) {
-            throw new \RuntimeException('You need to call `generate()` function first!');
-        }
-
         return $this->content;
     }
 
