@@ -2,11 +2,15 @@
 
 namespace Knp\Invoice\Model;
 
-class Tax
+class Coupon
 {
+    protected $id;
+
     protected $name;
 
     protected $value = 0;
+
+    protected $expiresAt;
 
     public function getName()
     {
@@ -15,6 +19,10 @@ class Tax
 
     public function getValue()
     {
+        if ($this->expiresAt && new \DateTime('NOW') <= $this->expiresAt) {
+            return 0;
+        }
+
         return $this->value;
     }
 
@@ -31,5 +39,10 @@ class Tax
         }
 
         $this->value = $value;
+    }
+
+    public function setExpiresAt($date)
+    {
+        $this->expiresAt = new \DateTime($date);
     }
 }

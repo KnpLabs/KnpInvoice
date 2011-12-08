@@ -4,15 +4,13 @@ namespace Knp\Invoice\Model;
 
 class Invoice
 {
-    protected $id;
-
     protected $number;
 
     protected $seller;
 
     protected $buyer;
 
-    protected $tax;
+    protected $coupon;
 
     protected $paidAmount;
 
@@ -47,6 +45,11 @@ class Invoice
         return $this->entries;
     }
 
+    public function getCoupon()
+    {
+        return $this->coupon;
+    }
+
     public function getPaid()
     {
         return $this->paidAmount;
@@ -61,9 +64,12 @@ class Invoice
             $tax   += $entry->getTax()->getValue();
         }
 
+        $toPay -= ($this->coupon ? $this->coupon->getValue() : 0);
+
         return array(
             'netto'  => $toPay,
-            'brutto' => $toPay + $tax
+            'brutto' => $toPay + $tax,
+            'amount' => ($toPay + $tax) - $this->paidAmount
         );
     }
 
@@ -97,9 +103,9 @@ class Invoice
         $this->buyer = $buyer;
     }
 
-    public function setTax(Tax $tax)
+    public function setCoupon(Coupon $coupon)
     {
-        $this->tax = $tax;
+        $this->coupon = $coupon;
     }
 
     public function addEntry(Entry $entry)

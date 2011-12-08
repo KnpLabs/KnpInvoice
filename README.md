@@ -21,6 +21,7 @@ for ($i = 0; $i < 5; $i++) {
     $entry = new Knp\Invoice\Model\Entry();
     $entry->setDescription('Development ' . mt_rand(1, 9));
     $entry->setUnitPrice(mt_rand(100, 500));
+    $entry->setQuantity(mt_rand(1, 4));
 
     $invoice->addEntry($entry);
 }

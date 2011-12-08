@@ -85,10 +85,8 @@
             <dt>Subtotal</dt>
             <dd>{{ invoice.total.netto }}</dd>
 
-        {%- if invoice.tax is not empty %}
-            <dt>{{ invoice.tax.name }}</dt>
-            <dd>{{ invoice.tax.value }}</dd>
-        {%- endif %}
+            <dt>{{ invoice.tax.name|default('TVA 0%') }}</dt>
+            <dd>{{ invoice.tax.value|default(0) }}</dd>
         </dl>
 
         <dl>
@@ -101,7 +99,7 @@
 
         <dl class="invoice-total">
             <dt>Amount Due</dt>
-            <dd>{{ invoice.total.brutto - invoice.paid|default('0.00') }}</dd>
+            <dd>{{ invoice.total.amount }}</dd>
         </dl>
     </div>
 

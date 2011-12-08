@@ -4,8 +4,6 @@ namespace Knp\Invoice\Model;
 
 class Entry
 {
-    protected $id;
-
     protected $tax;
 
     protected $description;
@@ -24,7 +22,7 @@ class Entry
         return $this->unit_price;
     }
 
-    public function getFullPrice()
+    public function getTotalPrice()
     {
         return $this->unit_price + ($this->unit_price * $this->tax->getValue());
     }

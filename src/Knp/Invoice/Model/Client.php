@@ -2,12 +2,8 @@
 
 namespace Knp\Invoice\Model;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
 abstract class Client
 {
-    protected $id;
-
     protected $first_name;
     protected $last_name;
 
