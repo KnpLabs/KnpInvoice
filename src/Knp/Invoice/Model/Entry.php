@@ -70,7 +70,7 @@ class Entry
     {
         $quantity = (int) $quantity;
         if ($quantity < 1) {
-            throw new \InvalidArgumentException();
+            throw new \OutOfBoundsException();
         }
 
         $this->quantity = $quantity;

@@ -35,7 +35,7 @@ class Coupon
     {
         $value = (int) $value;
         if ($value < 0) {
-            throw new \InvalidArgumentException();
+            throw new \OutOfBoundsException();
         }
 
         $this->value = $value;

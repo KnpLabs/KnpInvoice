@@ -2,15 +2,19 @@
 
 namespace Knp\Invoice\Generators;
 
-use Knp\Invoice\Model\Invoice;
+use Knp\Invoice\Model;
 
 class TwigTest extends \PHPUnit_Framework_TestCase
 {
+    protected $generator;
+
     protected function setUp()
     {
         if (!class_exists('Twig_Environment')) {
             $this->markTestSkipped('Twig is not available.');
         }
+
+        $this->generator = new Twig;
     }
 
     /**
@@ -18,7 +22,73 @@ class TwigTest extends \PHPUnit_Framework_TestCase
      */
     public function testWhatCheckTemplateAllows()
     {
-        $generator = new Twig;
-        $generator->generate(new Invoice(), 'dummy');
+        $this->generator->generate(new Model\Invoice(), 'dummy');
+    }
+
+    public function testGenerateInvoice()
+    {
+        $address = array(
+            'seller' => array(
+                'street'  => '11 RUE KERVEGAN',
+                'city'    => 'NANTES',
+                'zipcode' => '44000',
+                'country' => 'France'
+            ),
+            'buyer'  => array(
+                'street'  => 'Słowackiego 17',
+                'city'    => 'Łowicz',
+                'zipcode' => '99-400',
+                'country' => 'Poland'
+            )
+        );
+
+        $invoice = new Model\Invoice();
+
+        $seller = new Model\Seller();
+        $seller->setName('KnpLabs France');
+        $seller->setAddress(
+            $address['seller']['street'],
+            $address['seller']['city'],
+            $address['seller']['zipcode'],
+            $address['seller']['country']
+        );
+
+        $this->assertEquals('KnpLabs France', $seller->getName());
+        $this->assertEquals($address['seller'], $seller->getAddress());
+
+        $invoice->setSeller($seller);
+
+        $buyer = new Model\Buyer();
+        $buyer->setName('Józef Bielawski');
+        $buyer->setAddress(
+            $address['buyer']['street'],
+            $address['buyer']['city'],
+            $address['buyer']['zipcode'],
+            $address['buyer']['country']
+        );
+
+        $this->assertEquals('Józef Bielawski', $buyer->getName());
+        $this->assertEquals($address['buyer'], $buyer->getAddress());
+
+        $invoice->setBuyer($buyer);
+
+        $tax = new Model\Tax('TAX 23%', 23);
+
+        $this->assertEquals('TAX 23%', $tax->getName());
+        $this->assertEquals(23, $tax->getValue());
+
+        $entry = new Model\Entry();
+        $entry->setDescription('Entry #1');
+        $entry->setUnitPrice(666);
+        $entry->addTax($tax);
+
+        $invoice->addEntry($entry);
+
+        $this->generator->generate($invoice);
+
+        $this->assertContains(
+            '<title>KnpLabs France - Facture #0000001</title>',
+            $this->generator->__toString()
+        );
     }
 }
