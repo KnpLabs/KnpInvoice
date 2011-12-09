@@ -87,19 +87,19 @@ class TwigTest extends \PHPUnit_Framework_TestCase
 
         $this->generator->generate($invoice);
 
-        $this->assertContains('<div id="invoice">
-    <dl>
-        <dd>0000001</dd>
-        <dt>Facture #</dt>
+        $this->assertContains(preg_replace('/[\t\r\n]/', '', '<div id="invoice">
+        <dl>
+            <dd>0000001</dd>
+            <dt>Facture #</dt>
 
-        <dd>December 8, 2011</dd>
-        <dt>Facture Date</dt>
-    </dl>
+            <dd>December 9, 2011</dd>
+            <dt>Facture Date</dt>
+        </dl>
 
-    <dl class="invoice-total">
-        <dd>&euro; 819.18 EUR</dd>
-        <dt>Amount Due</dt>
-    </dl>
-</div>', $this->generator->render());
+        <dl class="invoice-total">
+            <dd>&euro; 819.18 EUR</dd>
+            <dt>Amount Due</dt>
+        </dl>
+    </div>'), preg_replace('/[\t\r\n]/', '', $this->generator->render()));
     }
 }
