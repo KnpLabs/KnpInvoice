@@ -46,9 +46,9 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             ),
             array(
                 array(
-                    'street'  => 'Słowackiego 17',
-                    'city'    => 'Łowicz',
-                    'zipcode' => '99-400',
+                    'street'  => 'Kozia 5',
+                    'city'    => 'Kozia Wólka',
+                    'zipcode' => '00-666',
                     'country' => 'Poland'
                 ),
             )

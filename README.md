@@ -25,9 +25,9 @@ $invoice->setSeller($seller);
 
 // Lets set up buyer data now
 $buyer = new Knp\Invoice\Model\Buyer();
-$buyer->setName('Józef Bielawski');
+$buyer->setName('Marek Nowak');
 // Add address: street, city, zip-code, country
-$buyer->setAddress('Słowackiego 17', 'Łowicz', '99-400', 'Poland');
+$buyer->setAddress('Kozia 5', 'Kozia Wólka', '00-666', 'Poland');
 
 // Now add buyer to invoice
 $invoice->setBuyer($buyer);
