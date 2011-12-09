@@ -4,8 +4,6 @@ namespace Knp\Invoice\Model;
 
 class Coupon
 {
-    protected $id;
-
     protected $name;
 
     protected $value = 0;
@@ -19,8 +17,12 @@ class Coupon
 
     public function getValue()
     {
-        if ($this->expiresAt && new \DateTime('NOW') <= $this->expiresAt) {
-            return 0;
+        if ($this->expiresAt) {
+            $date = new \DateTime('NOW');
+            $interval = $date->diff($this->expiresAt);
+            if ($interval->format('%d')) {
+                return 0;
+            }
         }
 
         return $this->value;

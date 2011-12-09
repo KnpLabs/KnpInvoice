@@ -4,20 +4,44 @@ namespace Knp\Invoice\Model;
 
 class Invoice
 {
+    /**
+     * @var mixed
+     */
     protected $number = '0000001';
 
+    /**
+     * @var Seller
+     */
     protected $seller;
 
+    /**
+     * @var Buyer
+     */
     protected $buyer;
 
+    /**
+     * @var Coupon
+     */
     protected $coupon;
 
+    /**
+     * @var float
+     */
     protected $paidAmount;
 
+    /**
+     * @var Entry[]
+     */
     protected $entries;
 
+    /**
+     * @var \DateTime
+     */
     protected $createdAt;
 
+    /**
+     * @var \DateTime
+     */
     protected $payDue;
 
     public function __construct()

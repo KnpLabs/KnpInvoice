@@ -4,15 +4,27 @@ namespace Knp\Invoice\Model;
 
 class Entry
 {
+    /**
+     * @var Tax[]
+     */
     protected $taxes;
 
+    /**
+     * @var string
+     */
     protected $description;
 
+    /**
+     * @var float
+     */
     protected $unit_price;
 
+    /**
+     * @var integer
+     */
     protected $quantity = 1;
 
-    public function  __construct()
+    public function __construct()
     {
         $this->taxes = array();
     }

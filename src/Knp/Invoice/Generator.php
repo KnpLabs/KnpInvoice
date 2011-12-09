@@ -37,9 +37,14 @@ class Generator
         throw new \RuntimeException();
     }
 
-    public function __toString()
+    public function render()
     {
         return $this->content;
+    }
+
+    public function __toString()
+    {
+        return $this->render();
     }
 
     protected function checkTemplate($template)
