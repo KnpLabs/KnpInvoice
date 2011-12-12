@@ -13,25 +13,39 @@ class Twig extends Generator
             throw new \RuntimeException('Twig library is required!');
         }
 
-        $this->generator = new \Twig_Environment(new \Twig_Loader_String());
+        $this->generator = new \Twig_Environment(
+            new \Twig_Loader_Filesystem($this->getTheme())
+        );
     }
 
-    public function generate(Invoice $invoice, $template = 'invoice')
+    public function setTheme($theme)
     {
-        $this->checkTemplate($template);
+        parent::setTheme($theme);
 
-        $this->filename = preg_replace('/[^a-z0-9_-]/i', '', $invoice->getSeller()->getName()) .'_'. $invoice->getNumber().'_'.$template;
-        $this->content  = $this->generator->render(
-            file_get_contents(
-                __DIR__.'/../'.$this->theme.'/'.$template.'.html.twig'
-            ),
+        $this->generator->setLoader(
+            new \Twig_Loader_Filesystem($theme)
+        );
+    }
+
+    public function generate(Invoice $invoice, $template = null)
+    {
+        $this->setInvoice($invoice);
+
+        $this->checkTemplate($template);
+        $this->getFilename($template);
+
+        if (!$template instanceof \Twig_Template) {
+            $template = $this->generator->loadTemplate($this->template.'.html.twig');
+        }
+
+        $this->content = $template->render(
             array(
                 'invoice' => $invoice
             )
         );
     }
 
-    public function generateAndSave(Invoice $invoice, $filename = null, $template = 'invoice')
+    public function generateAndSave(Invoice $invoice, $filename = null, $template = null)
     {
         $this->generate($invoice, $template);
 

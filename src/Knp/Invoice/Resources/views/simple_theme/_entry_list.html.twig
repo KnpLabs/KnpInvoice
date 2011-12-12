@@ -1,0 +1,23 @@
+<table>
+    <thead>
+    <tr>
+        <th class="col1">Entry</th>
+        <th class="col2">Description</th>
+        <th class="col3">Price</th>
+        <th class="col4">Quantity</th>
+        <th class="col5">Line Total</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {%- for entry in invoice.entries %}
+    <tr>
+        <td>#{{ loop.index }}</td>
+        <td>{{ entry.description }}</td>
+        <td class="col3">{{ entry.unitPrice }}</td>
+        <td class="col4">{{ entry.quantity }}</td>
+        <td class="col5">{{ entry.totalPrice }}</td>
+    </tr>
+    {%- endfor %}
+    </tbody>
+</table>

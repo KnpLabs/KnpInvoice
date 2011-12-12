@@ -60,9 +60,19 @@ class Invoice
         return $this->seller;
     }
 
+    public function getSellerName()
+    {
+        return $this->seller->getName();
+    }
+
     public function getBuyer()
     {
         return $this->buyer;
+    }
+
+    public function getBuyerName()
+    {
+        return $this->buyer->getName();
     }
 
     public function getEntries()

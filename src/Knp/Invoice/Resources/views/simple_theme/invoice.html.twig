@@ -1,44 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>{{ invoice.seller.name }} - Facture #{{ invoice.number }}</title>
-</head>
+{% extends 'base.html.twig' %}
 
-<style type="text/css" media="all">
-    body {margin: 50px;padding: 0;font: 12px Arial}
-    #container {margin: 0 auto; width: 680px}
-
-    #seller {margin: 25px; width: 620px;clear: both;}
-
-    #invoice, #invoice-total {float: right; width: 300px; margin-bottom: 30px}
-    #invoice dt, #invoice-total dt {float: left; width: 100px; margin-bottom: 4px}
-    #invoice dd, #invoice-total dd {float: right; width: 184px; margin: 0 0 4px; text-align: right}
-    .invoice-total {float: left;font-weight: bold;margin: 0;padding: 5px 8px;border-top: 1px solid #f1f1f1;background:#e3e3e3}
-
-    #buyer {float: left; width: 300px}
-
-    #invoice-total {clear: both;}
-
-    #terms, #notes {float: left;width: 100%;margin: 10px 0}
-
-    table {width: 100%}
-    table thead tr {padding: 10px 5px;border: 1px solid #c7c7c7;font-weight: bold;}
-    table thead th {border-top: 1px solid #f1f1f1;background:#e3e3e3}
-    
-    table tbody tr {padding: 10px 5px;border-bottom:1px solid #e5e5e5;}
-
-    .col1 {width: 20%; text-align: left}
-    .col2 {width: 50%; text-align: left}
-    .col3 {}
-    .col4 {}
-    .col5 {}
-    .col3, .col4, .col5 {width: 10%; text-align: right}
-</style>
-
-<body>
-
-<div id="container">
+{% block content %}
     <div id="seller">
     {%- if invoice.seller.logo is not empty %}
         <img src="{{ invoice.seller.logo }}" alt="">
@@ -73,29 +35,7 @@
     </div>
     {%- endif %}
 
-    <table>
-        <thead>
-            <tr>
-                <th class="col1">Entry</th>
-                <th class="col2">Description</th>
-                <th class="col3">Price</th>
-                <th class="col4">Quantity</th>
-                <th class="col5">Line Total</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            {%- for entry in invoice.entries %}
-            <tr>
-                <td>#{{ loop.index }}</td>
-                <td>{{ entry.description }}</td>
-                <td class="col3">{{ entry.unitPrice }}</td>
-                <td class="col4">{{ entry.quantity }}</td>
-                <td class="col5">{{ entry.totalPrice }}</td>
-            </tr>
-            {%- endfor %}
-        </tbody>
-    </table>
+    {% include '_entry_list.html.twig' %}
 
     <hr>
 
@@ -141,6 +81,4 @@
         <strong>Notes:</strong>
         <p>{{ invoice.notes|default('-') }}</p>
     </div>
-</div>
-</body>
-</html>
+{% endblock %}

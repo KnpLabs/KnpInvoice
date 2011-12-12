@@ -6,15 +6,37 @@ use Knp\Invoice\Model\Invoice;
 
 class Generator
 {
+    protected $invoice;
     protected $filename;
     protected $content = '';
     protected $generator;
 
-    protected $theme = 'Resources/views/simple_theme';
+    protected $template;
+    protected $theme;
+    protected $defaultTemplate = 'invoice';
+    protected $defaultTheme    = 'Resources/views/simple_theme';
 
     static protected $templates = array(
         'invoice', 'list'
     );
+
+    public function getFilename($template)
+    {
+        if (!$this->filename) {
+            $this->filename = preg_replace('/[^a-z0-9_-]/i', '', $this->invoice->getSellerName()) .'_'. $this->invoice->getNumber().'_'.$template;
+        }
+
+        return $this->filename;
+    }
+
+    public function getTheme()
+    {
+        if (!$this->theme) {
+            $this->theme = __DIR__.'/'.$this->defaultTheme;
+        }
+
+        return $this->theme;
+    }
 
     public function setTheme($theme)
     {
@@ -27,12 +49,17 @@ class Generator
         $this->theme = $theme;
     }
 
-    public function generate(Invoice $invoice, $template = 'invoice')
+    public function setInvoice(Invoice $invoice)
+    {
+        $this->invoice = $invoice;
+    }
+
+    public function generate(Invoice $invoice, $template = null)
     {
         throw new \RuntimeException();
     }
 
-    public function generateAndSave(Invoice $invoice, $filename = null, $template = 'invoice')
+    public function generateAndSave(Invoice $invoice, $filename = null, $template = null)
     {
         throw new \RuntimeException();
     }
@@ -49,8 +76,14 @@ class Generator
 
     protected function checkTemplate($template)
     {
+        if ($template === null) {
+            $template = $this->defaultTemplate;
+        }
+
         if (!in_array($template, self::$templates)) {
             throw new \InvalidArgumentException('Unknown template name given!');
         }
+
+        $this->template = $template;
     }
 }
