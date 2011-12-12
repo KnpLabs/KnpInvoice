@@ -47,7 +47,11 @@ class Twig extends Generator
         $this->setTemplate($template);
 
         if (!$template instanceof \Twig_Template) {
-            $template = $this->generator->loadTemplate($this->getTemplate());
+            try {
+                $template = $this->generator->loadTemplate($this->getTemplate());
+            } catch (\Twig_Error_Loader $e) {
+                throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
+            }
         }
 
         $this->content = $template->render(
