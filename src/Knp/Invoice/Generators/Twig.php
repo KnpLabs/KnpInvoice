@@ -18,24 +18,36 @@ class Twig extends Generator
         );
     }
 
-    public function setTheme($theme)
+    public function setTemplate($template)
     {
-        parent::setTheme($theme);
+        if (null !== $template && '.' !== substr($template, -5, 1)) {
+            $template .= '.html.twig';
+        }
+
+        parent::setTemplate($template);
+    }
+
+    public function setTheme($themePath)
+    {
+        $defaultTheme = $this->getTheme();
+
+        parent::setTheme($themePath);
 
         $this->generator->setLoader(
-            new \Twig_Loader_Filesystem($theme)
+            new \Twig_Loader_Filesystem(array(
+                $themePath,
+                $defaultTheme
+            ))
         );
     }
 
     public function generate(Invoice $invoice, $template = null)
     {
         $this->setInvoice($invoice);
-
-        $this->checkTemplate($template);
-        $this->getFilename($template);
+        $this->setTemplate($template);
 
         if (!$template instanceof \Twig_Template) {
-            $template = $this->generator->loadTemplate($this->template.'.html.twig');
+            $template = $this->generator->loadTemplate($this->getTemplate());
         }
 
         $this->content = $template->render(
@@ -48,7 +60,11 @@ class Twig extends Generator
     public function generateAndSave(Invoice $invoice, $filename = null, $template = null)
     {
         $this->generate($invoice, $template);
+        $this->save($filename);
+    }
 
-        file_put_contents($filename ?: $this->filename.'.html', $this->content);
+    public function save($filename)
+    {
+        file_put_contents($filename ?: $this->getFilename().'.html', $this->content);
     }
 }

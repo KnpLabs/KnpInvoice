@@ -6,47 +6,83 @@ use Knp\Invoice\Model\Invoice;
 
 class Generator
 {
+    /**
+     * @var Knp\Invoice\Model\Invoice
+     */
     protected $invoice;
-    protected $filename;
+
+    /**
+     * @var mixed
+     */
     protected $content = '';
+
+    /**
+     * @var object
+     */
     protected $generator;
 
+    /**
+     * @var string
+     */
+    protected $filename;
+
+    /**
+     * @var string
+     */
     protected $template;
-    protected $theme;
-    protected $defaultTemplate = 'invoice';
+
+    /**
+     * @var string
+     */
+    protected $themePath;
+
+    /**
+     * @var string
+     */
+    protected $defaultTemplate = 'invoice.html.twig';
+
+    /**
+     * @var string
+     */
     protected $defaultTheme    = 'Resources/views/simple_theme';
 
-    static protected $templates = array(
-        'invoice', 'list'
-    );
-
-    public function getFilename($template)
+    public function getFilename()
     {
         if (!$this->filename) {
-            $this->filename = preg_replace('/[^a-z0-9_-]/i', '', $this->invoice->getSellerName()) .'_'. $this->invoice->getNumber().'_'.$template;
+            $this->filename = preg_replace('/[^a-z0-9_-]/i', '', $this->invoice->getSellerName()) .'_'. $this->invoice->getNumber().'_'.$this->getTemplate();
         }
 
         return $this->filename;
     }
 
-    public function getTheme()
+    public function getTemplate()
     {
-        if (!$this->theme) {
-            $this->theme = __DIR__.'/'.$this->defaultTheme;
-        }
-
-        return $this->theme;
+        return $this->template ?: $this->defaultTemplate;
     }
 
-    public function setTheme($theme)
+    public function getTheme()
     {
-        if (!is_string($theme)) {
-            throw new \InvalidArgumentException('You need to use proper path.');
-        } else if (!file_exists($theme) || !is_readable($theme)) {
-            throw new \RuntimeException('Theme folder not exists and/or is not readable.');
+        return $this->themePath ?: __DIR__.'/'.$this->defaultTheme;
+    }
+
+    public function setTemplate($template)
+    {
+        if ($template) {
+            $this->setTheme(dirname($template));
         }
 
-        $this->theme = $theme;
+        $this->template = $template;
+    }
+
+    public function setTheme($themePath)
+    {
+        if (!$themePath) {
+            $themePath = $this->defaultTheme;
+        }
+
+        $this->_checkFileOrDir($themePath);
+
+        $this->themePath = $themePath;
     }
 
     public function setInvoice(Invoice $invoice)
@@ -74,16 +110,12 @@ class Generator
         return $this->render();
     }
 
-    protected function checkTemplate($template)
+    protected function _checkFileOrDir($fileOrPath)
     {
-        if ($template === null) {
-            $template = $this->defaultTemplate;
+        if (!is_string($fileOrPath)) {
+            throw new \InvalidArgumentException(sprintf('You need to use proper path. Used: "%s"', $fileOrPath));
+        } else if (!file_exists($fileOrPath) || !is_readable($fileOrPath)) {
+            throw new \RuntimeException(sprintf('File/directory ("%s") not exists and/or is not readable.', $fileOrPath));
         }
-
-        if (!in_array($template, self::$templates)) {
-            throw new \InvalidArgumentException('Unknown template name given!');
-        }
-
-        $this->template = $template;
     }
 }

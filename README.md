@@ -75,9 +75,56 @@ for ($i = 0; $i < 5; $i++) {
 // $content = new Knp\Invoice\Generators\Snappy;
 $content = new Knp\Invoice\Generators\Twig;
 $content->generate($invoice);
-// $html->generateAndSave($invoice); # You can generate and save invoice instead of returning to browser
+
+// $content->generateAndSave($invoice); # You can generate and save invoice instead of returning to browser
 // or
 // $content->generate($invoice, null, 'list'); # generate just list of entries
+
+echo $content;
+```
+
+Making your own template
+========================
+
+Now you know how to generate and invoice, here you have and example of using own Twig templates:
+
+```html+jinja
+{# MyDir/invoice.html.twig #}
+
+{% extends 'base.html.twig' %}
+{# This will lookup for this template in: "MyDir" and if not found in default Knp\Invoice theme dir #}
+
+{% block content %}
+<table>
+    <thead>
+    <tr>
+        <th class="col1">Entry</th>
+        <th class="col3">Price</th>
+        <th class="col4">Quantity</th>
+        <th class="col5">Line Total</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {%- for entry in invoice.entries %}
+    <tr>
+        <td>#{{ loop.index }}</td>
+        <td class="col3">{{ entry.unitPrice }}</td>
+        <td class="col4">{{ entry.quantity }}</td>
+        <td class="col5">{{ entry.totalPrice }}</td>
+    </tr>
+    {%- endfor %}
+    </tbody>
+</table>
+{% endblock %}
+```
+
+```php
+<?php
+
+$content = new Knp\Invoice\Generators\Twig;
+$content->setTemplate('MyDir/invoice.html.twig');
+$content->generate($invoice);
 
 echo $content;
 ```

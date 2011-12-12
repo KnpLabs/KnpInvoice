@@ -25,33 +25,38 @@ class Snappy extends Twig
         parent::__construct();
     }
 
-    public function generate(Invoice $invoice, $template = 'invoice')
+    public function generate(Invoice $invoice, $template = null)
     {
         parent::generate($invoice, $template);
 
-        $this->_generate();
+        $this->_generate($this->getFilename());
     }
 
-    public function generateAndSave(Invoice $invoice, $filename = null, $template = 'invoice')
+    public function generateAndSave(Invoice $invoice, $filename = null, $template = null)
     {
-        parent::generate($invoice, $template);
+        $this->generate($invoice, $template);
 
-        $this->_generate($filename);
+        $this->save($filename);
     }
 
     public function __toString()
     {
         if ($this->content) {
             header('Content-Type: application/pdf');
-            header('Content-Disposition: attachment; filename="'.$this->filename.'.pdf"');
+            header('Content-Disposition: attachment; filename="'.$this->getFilename().'.pdf"');
         }
 
-        return $this->content;
+        return $this->render();
     }
 
-    protected function _generate($filename = null)
+    public function save($filename)
+    {
+        file_put_contents($filename ?: $this->getFilename().'.pdf', $this->content);
+    }
+
+    protected function _generate()
     {
         $snappy = new Pdf($this->binLocation);
-        $snappy->getOutputFromHtml($this->content, $filename ?: $this->filename.'.pdf');
+        $this->content = $snappy->getOutputFromHtml($this->content);
     }
 }
