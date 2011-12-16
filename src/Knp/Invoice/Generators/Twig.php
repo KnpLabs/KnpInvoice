@@ -54,11 +54,13 @@ class Twig extends Generator
             }
         }
 
-        $this->content = $template->render(
-            array(
-                'invoice' => $invoice
-            )
-        );
+        ob_start();
+        $template->display(array(
+            'invoice' => $invoice
+        ));
+        $this->content = ob_get_clean();
+
+        return $this->content;
     }
 
     public function generateAndSave(Invoice $invoice, $filename = null, $template = null)
