@@ -38,7 +38,7 @@ class SnappyTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('Binary `wkhtmltopdf` not found.');
         }
 
-        $generator = new Snappy;
+        $generator = new Snappy();
         $generator->generate(new Invoice());
     }
 }

@@ -97,7 +97,7 @@ class TwigTest extends \PHPUnit_Framework_TestCase
         $entry->setUnitPrice(666);
         $entry->addTax($tax);
 
-        $invoice->setDate('2011-12-08');
+        $invoice->setIssueDate(new \DateTime('2011-12-08'));
         $invoice->addEntry($entry);
 
         return $invoice;

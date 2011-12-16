@@ -42,7 +42,7 @@ class Invoice
     /**
      * @var \DateTime
      */
-    protected $payDue;
+    protected $issueDate;
 
     public function __construct()
     {
@@ -62,7 +62,7 @@ class Invoice
 
     public function getSellerName()
     {
-        return $this->seller->getName();
+        return $this->seller ? $this->seller->getName() : null;
     }
 
     public function getBuyer()
@@ -117,14 +117,14 @@ class Invoice
         $this->number = $value;
     }
 
-    public function setDate($date)
+    public function setCreatedAt(\DateTime $date)
     {
-        $this->createdAt = new \DateTime($date);
+        $this->createdAt = $date;
     }
 
-    public function setPayDue($date)
+    public function setIssueDate(\DateTime $date)
     {
-        $this->payDue = new \DateTime($date);
+        $this->issueDate = $date;
     }
 
     public function setPaidAmount($paid)
