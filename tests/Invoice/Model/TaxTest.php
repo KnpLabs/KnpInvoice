@@ -1,6 +1,6 @@
 <?php
 
-namespace Knp\Invoice\Model;
+namespace Knp\Invoice\Test\Model;
 
 class TaxTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,7 +17,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetters($name, $value)
     {
-        $tax = new Tax;
+        $tax = new Tax();
         $tax->setName($name);
         $tax->setValue($value);
 
@@ -30,7 +30,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
      */
     public function testValueCannotBeLowerThanZero()
     {
-        $tax = new Tax;
+        $tax = new Tax();
         $tax->setValue(-1);
     }
 

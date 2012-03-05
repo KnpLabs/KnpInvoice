@@ -1,6 +1,6 @@
 <?php
 
-namespace Knp\Invoice\Generators;
+namespace Knp\Invoice\Test\Generators;
 
 use Knp\Invoice\Model;
 
@@ -14,7 +14,7 @@ class TwigTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('Twig is not available.');
         }
 
-        $this->generator = new Twig;
+        $this->generator = new Twig();
     }
 
     /**
@@ -97,7 +97,7 @@ class TwigTest extends \PHPUnit_Framework_TestCase
         $entry->setUnitPrice(666);
         $entry->addTax($tax);
 
-        $invoice->setIssueDate(new \DateTime('2011-12-08'));
+        $invoice->setDate('2011-12-08');
         $invoice->addEntry($entry);
 
         return $invoice;

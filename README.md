@@ -1,13 +1,16 @@
-﻿KnpInvoice
-==========
+# ﻿KnpInvoice
+
+
+To install this library call:
+
+```bash
+$ php composer.phar install
+```
 
 Give you an ability, to generate html/pdf invoices.
 
 ```php
 <?php
-
-// Setup Symfony2 based autoloader
-require_once __DIR__.'/src/autoload.php';
 
 // Set up Invoice model (required to do anything)
 $invoice = new Knp\Invoice\Model\Invoice();

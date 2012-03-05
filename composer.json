@@ -1,4 +1,4 @@
-﻿{
+{
     "name": "knplabs/knp-invoice",
     "type": "library",
     "description": "PDF invoice generation",
@@ -13,10 +13,10 @@
 
     "require": {
         "php": ">=5.3.2",
-        "twig/twig": ">=1.2"
+        "twig/twig": ">=1.4"
     },
 
-    "suggest": {
+    "recommend": {
         "knplabs/knp-snappy": "dev-master"
     },
 
@@ -24,4 +24,5 @@
         "psr-0": {
             "Knp\\Invoice": "src/"
         }
+    }
 }

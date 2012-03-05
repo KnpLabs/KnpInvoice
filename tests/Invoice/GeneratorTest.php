@@ -1,6 +1,6 @@
 <?php
 
-namespace Knp\Invoice;
+namespace Knp\Invoice\Test;
 
 use Knp\Invoice\Model\Invoice;
 
@@ -11,7 +11,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testGenerateFunctionMustBeOverwritten()
     {
-        $generator = new Generator;
+        $generator = new Generator();
         $generator->generate(new Invoice());
     }
 
@@ -20,13 +20,13 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testGenerateAndSaveFunctionMustBeOverwritten()
     {
-        $generator = new Generator;
+        $generator = new Generator();
         $generator->generateAndSave(new Invoice());
     }
 
     public function testToStringFunctionNeedsGeneratedContent()
     {
-        $generator = new Generator;
+        $generator = new Generator();
         $this->assertEmpty((string) $generator);
     }
 
@@ -35,7 +35,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetThemeFunctionNeedsStringTest()
     {
-        $generator = new Generator;
+        $generator = new Generator();
         $generator->setTheme((int) 1);
     }
 
@@ -44,7 +44,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetThemeFunctionNeedsExistingFileTest()
     {
-        $generator = new Generator;
+        $generator = new Generator();
         $generator->setTheme('dummy_name');
     }
 }

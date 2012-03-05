@@ -1,6 +1,6 @@
 <?php
 
-namespace Knp\Invoice\Model;
+namespace Knp\Invoice\Test\Model;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -9,7 +9,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetAddress($address)
     {
-        $client = new Buyer;
+        $client = new Buyer();
         $client->setAddress($address['street'], $address['city'], $address['zipcode'], $address['country']);
 
         $this->assertTrue(is_array($client->getAddress()));

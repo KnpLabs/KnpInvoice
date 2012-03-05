@@ -1,6 +1,6 @@
 <?php
 
-namespace Knp\Invoice\Model;
+namespace Knp\Invoice\Test\Model;
 
 class SellerTest extends ClientTest
 {
@@ -9,7 +9,7 @@ class SellerTest extends ClientTest
      */
     public function testLogoFileMustExists()
     {
-        $seller = new Seller;
+        $seller = new Seller();
         $seller->setLogo('dummy_filename');
     }
 }

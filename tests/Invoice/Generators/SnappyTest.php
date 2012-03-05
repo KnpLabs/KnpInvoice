@@ -1,6 +1,6 @@
 <?php
 
-namespace Knp\Invoice\Generators;
+namespace Knp\Invoice\Test\Generators;
 
 use Knp\Invoice\Model\Invoice;
 
@@ -15,7 +15,7 @@ class SnappyTest extends \PHPUnit_Framework_TestCase
         }
 
         try {
-            new Snappy;
+            new Snappy();
         } catch (\RuntimeException $e) {
             $this->skip = true;
         }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Knp\Invoice\Model;
+namespace Knp\Invoice\Test\Model;
 
 class EntryTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetTaxReturnsTaxModel()
     {
-        $entry = new Entry;
+        $entry = new Entry();
 
         $this->assertCount(1, $entry->getTax());
         $this->assertInstanceOf('Knp\Invoice\Model\Tax', current($entry->getTax()));
@@ -17,7 +17,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetTotalPrice($quantity, $price, $total)
     {
-        $entry = new Entry;
+        $entry = new Entry();
         $entry->setQuantity($quantity);
         $entry->setUnitPrice($price);
 
@@ -29,7 +29,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
      */
     public function testEntryCanHaveOnlyTwoTaxes()
     {
-        $entry = new Entry;
+        $entry = new Entry();
         $entry->addTax(new Tax('Tax 1', 1));
         $entry->addTax(new Tax('Tax 2', 2));
         $entry->addTax(new Tax('Tax 3', 3));
@@ -40,7 +40,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
      */
     public function testQuantityCannotBeLowerThanOne()
     {
-        $entry = new Entry;
+        $entry = new Entry();
         $entry->setQuantity(0);
     }
 

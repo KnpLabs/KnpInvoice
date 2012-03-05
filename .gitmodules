@@ -1,9 +1,0 @@
-[submodule "vendor/symfony-class-loader"]
-	path = vendor/symfony-class-loader
-	url = https://github.com/symfony/ClassLoader.git
-[submodule "vendor/twig"]
-	path = vendor/twig
-	url = https://github.com/fabpot/Twig.git
-[submodule "vendor/knp/snappy"]
-	path = vendor/knp/snappy
-	url = https://github.com/KnpLabs/snappy.git

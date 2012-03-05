@@ -1,6 +1,6 @@
 <?php
 
-namespace Knp\Invoice\Model;
+namespace Knp\Invoice\Test\Model;
 
 class CouponTest extends \PHPUnit_Framework_TestCase
 {
@@ -9,7 +9,7 @@ class CouponTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetters($name, $value)
     {
-        $coupon = new Coupon;
+        $coupon = new Coupon();
         $coupon->setName($name);
         $coupon->setValue($value);
 
@@ -19,7 +19,7 @@ class CouponTest extends \PHPUnit_Framework_TestCase
 
     public function testValueReturnsZeroIfCouponIsExpired()
     {
-        $coupon = new Coupon;
+        $coupon = new Coupon();
         $coupon->setValue(23);
         $coupon->setExpiresAt('2010-01-01');
 
@@ -31,7 +31,7 @@ class CouponTest extends \PHPUnit_Framework_TestCase
      */
     public function testValueCannotBeLowerThanZero()
     {
-        $coupon = new Coupon;
+        $coupon = new Coupon();
         $coupon->setValue(-1);
     }
 
