@@ -44,10 +44,18 @@ class Invoice
      */
     protected $issueDate;
 
+    /**
+     * Additional information. You could store any additional information there.
+     *
+     * @var array
+     */
+    protected $information;
+
     public function __construct()
     {
         $this->entries   = array();
         $this->createdAt = new \DateTime('NOW');
+        $this->information = array();
     }
 
     public function getNumber()
@@ -151,4 +159,25 @@ class Invoice
     {
         $this->entries[] = $entry;
     }
+
+    public function getInformation()
+    {
+        return $this->information;
+    }
+
+    public function setInformation(array $information)
+    {
+        $this->information = $information;
+    }
+
+    public function addInformation($data)
+    {
+        $this->information[] = $data;
+    }
+
+    public function clearInformation()
+    {
+        $this->information = array();
+    }
+
 }
