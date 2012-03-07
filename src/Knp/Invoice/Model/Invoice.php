@@ -49,13 +49,13 @@ class Invoice
      *
      * @var array
      */
-    protected $information;
+    protected $informations;
 
     public function __construct()
     {
         $this->entries   = array();
         $this->createdAt = new \DateTime('NOW');
-        $this->information = array();
+        $this->informations = array();
     }
 
     public function getNumber()
@@ -160,24 +160,24 @@ class Invoice
         $this->entries[] = $entry;
     }
 
-    public function getInformation()
+    public function getInformations()
     {
-        return $this->information;
+        return $this->informations;
     }
 
-    public function setInformation(array $information)
+    public function setInformations(array $informations)
     {
-        $this->information = $information;
+        $this->informations = $informations;
     }
 
     public function addInformation($data)
     {
-        $this->information[] = $data;
+        $this->informations[] = $data;
     }
 
-    public function clearInformation()
+    public function clearInformations()
     {
-        $this->information = array();
+        $this->informations = array();
     }
 
 }
