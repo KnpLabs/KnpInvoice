@@ -1,31 +1,28 @@
-﻿{
+{
     "name": "knplabs/knp-invoice",
     "type": "library",
     "description": "PDF invoice generation",
-    "keywords": ["invoice", "pdf"],
-    
+    "keywords": ["invoice", "pdf", "generator"],
+
     "authors": [
         {
             "name": "KnpLabs Team",
             "homepage": "http://knplabs.com"
         }
     ],
-    
+
     "require": {
         "php": ">=5.3.2",
-        "symfony/class-loader": ">2.0,<2.2-dev",
         "twig/twig": ">=1.2"
     },
-    
+
     "suggest": {
         "knplabs/knp-snappy": "dev-master"
     },
-    
+
     "autoload": {
         "psr-0": {
             "Knp\\Invoice": "src/"
         }
-    },
-    
-    "target-dir": "Knp/Invoice"
+    }
 }
