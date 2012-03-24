@@ -1,4 +1,4 @@
-{
+﻿{
     "name": "knplabs/knp-invoice",
     "type": "library",
     "description": "PDF invoice generation",
@@ -24,5 +24,4 @@
         "psr-0": {
             "Knp\\Invoice": "src/"
         }
-    }
 }
