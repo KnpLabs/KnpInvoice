@@ -37,7 +37,7 @@ class Invoice
     /**
      * @var \DateTime
      */
-    protected $createdAt;
+    public $createdAt;
 
     /**
      * @var \DateTime
@@ -54,7 +54,6 @@ class Invoice
     public function __construct()
     {
         $this->entries   = array();
-        $this->createdAt = new \DateTime('NOW');
         $this->informations = array();
     }
 
@@ -108,7 +107,7 @@ class Invoice
             $brutto += $entry->getTotalPriceWithTax();
 
             foreach ($entry->getTax() as $tax) {
-                $taxes[$tax->getName()] = $tax->getValue();
+                $taxes[$tax->getName()] = array('value' => $tax->getValue(), 'amount' => $entry->getTotalPrice() * $tax->getValue() / 100);
             }
         }
 
