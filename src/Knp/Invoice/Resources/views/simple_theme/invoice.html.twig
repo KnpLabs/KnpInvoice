@@ -46,7 +46,7 @@
 
         {%- for tax, value in invoice.total.taxes %}
             <dt>{{ tax|default('TVA 0%') }}</dt>
-            <dd>{{ value|default(0) }}</dd>
+            <dd>{{ value.amount|default(0) }}</dd>
         {%- else %}
             <dt>TVA 0%</dt>
             <dd>0</dd>
