@@ -2,182 +2,195 @@
 
 namespace Knp\Invoice\Model;
 
-class Invoice
-{
-    /**
-     * @var mixed
-     */
-    protected $number = '0000001';
+class Invoice {
 
-    /**
-     * @var Seller
-     */
-    protected $seller;
+	/**
+	 * @var mixed
+	 */
+	protected $number = '0000001';
 
-    /**
-     * @var Buyer
-     */
-    protected $buyer;
+	/**
+	 * @var Seller
+	 */
+	protected $seller;
 
-    /**
-     * @var Coupon
-     */
-    protected $coupon;
+	/**
+	 * @var Buyer
+	 */
+	protected $buyer;
 
-    /**
-     * @var float
-     */
-    protected $paidAmount;
+	/**
+	 * @var Coupon
+	 */
+	protected $coupon;
 
-    /**
-     * @var Entry[]
-     */
-    protected $entries;
+	/**
+	 * @var float
+	 */
+	protected $paidAmount;
 
-    /**
-     * @var \DateTime
-     */
-    protected $createdAt;
+	/**
+	 * @var Entry[]
+	 */
+	protected $entries;
 
-    /**
-     * @var \DateTime
-     */
-    protected $issueDate;
+	/**
+	 * @var \DateTime
+	 */
+	public $createdAt;
 
-    /**
-     * Additional information. You could store any additional information there.
-     *
-     * @var array
-     */
-    protected $informations;
+	/**
+	 * @var \DateTime
+	 */
+	protected $issueDate;
 
-    public function __construct()
-    {
-        $this->entries   = array();
-        $this->createdAt = new \DateTime('NOW');
-        $this->informations = array();
-    }
+	/**
+	 * Additional information. You could store any additional information there.
+	 *
+	 * @var array
+	 */
+	protected $informations;
 
-    public function getNumber()
-    {
-        return $this->number;
-    }
+	public function __construct()
+	{
+		$this->entries = array();
+		$this->informations = array();
+	}
 
-    public function getSeller()
-    {
-        return $this->seller;
-    }
+	public function getNumber()
+	{
+		return $this->number;
+	}
 
-    public function getSellerName()
-    {
-        return $this->seller ? $this->seller->getName() : null;
-    }
+	public function getSeller()
+	{
+		return $this->seller;
+	}
 
-    public function getBuyer()
-    {
-        return $this->buyer;
-    }
+	public function getSellerName()
+	{
+		return $this->seller ? $this->seller->getName() : null;
+	}
 
-    public function getBuyerName()
-    {
-        return $this->buyer->getName();
-    }
+	public function getBuyer()
+	{
+		return $this->buyer;
+	}
 
-    public function getEntries()
-    {
-        return $this->entries;
-    }
+	public function getBuyerName()
+	{
+		return $this->buyer->getName();
+	}
 
-    public function getCoupon()
-    {
-        return $this->coupon;
-    }
+	public function getEntries()
+	{
+		return $this->entries;
+	}
 
-    public function getPaid()
-    {
-        return $this->paidAmount;
-    }
+	public function getCoupon()
+	{
+		return $this->coupon;
+	}
 
-    public function getTotal()
-    {
-        $netto  = 0;
-        $brutto = 0;
-        $taxes  = array();
-        foreach ($this->entries as $entry) {
-            $netto  += $entry->getTotalPrice();
-            $brutto += $entry->getTotalPriceWithTax();
+	public function getPaid()
+	{
+		return $this->paidAmount;
+	}
 
-            foreach ($entry->getTax() as $tax) {
-                $taxes[$tax->getName()] = $tax->getValue();
-            }
-        }
+	public function getTotal()
+	{
+		$netto = 0;
+		$brutto = 0;
+		$taxes = array();
 
-        return array(
-            'netto'  => $netto,
-            'brutto' => $brutto,
-            'amount' => $brutto - ($this->coupon ? $this->coupon->getValue() : 0) - $this->paidAmount,
-            'taxes'  => $taxes
-        );
-    }
+		$taxes_netto = array();
+		foreach ($this->entries as $entry) {
+			foreach ($entry->getTax() as $tax) {
 
-    public function setNumber($value)
-    {
-        $this->number = $value;
-    }
+				$total = $entry->getTotalPrice();
+				if (isset($taxes_netto[$tax->getName()])) {
+					$taxes_netto[$tax->getName()] += $total;
+				}else{
+					$taxes_netto = array_merge($taxes_netto, array($tax->getName() => $total));
+				}
+			}
+		}
 
-    public function setCreatedAt(\DateTime $date)
-    {
-        $this->createdAt = $date;
-    }
+		foreach ($this->entries as $entry) {
+			$netto += $entry->getTotalPrice();
+			$brutto += $entry->getTotalPriceWithTax();
 
-    public function setIssueDate(\DateTime $date)
-    {
-        $this->issueDate = $date;
-    }
+			foreach ($entry->getTax() as $tax) {
+				$taxes[$tax->getName()] = array('value' => $tax->getValue(), 'amount' => $taxes_netto[$tax->getName()] * $tax->getValue() / 100);
+			}
+		}
 
-    public function setPaidAmount($paid)
-    {
-        $this->paidAmount = $paid;
-    }
+		return array(
+			'netto' => $netto,
+			'brutto' => $brutto,
+			'amount' => $brutto - ($this->coupon ? $this->coupon->getValue() : 0) - $this->paidAmount,
+			'taxes' => $taxes
+		);
+	}
 
-    public function setSeller(Client $seller)
-    {
-        $this->seller = $seller;
-    }
+	public function setNumber($value)
+	{
+		$this->number = $value;
+	}
 
-    public function setBuyer(Client $buyer)
-    {
-        $this->buyer = $buyer;
-    }
+	public function setCreatedAt(\DateTime $date)
+	{
+		$this->createdAt = $date;
+	}
 
-    public function setCoupon(Coupon $coupon)
-    {
-        $this->coupon = $coupon;
-    }
+	public function setIssueDate(\DateTime $date)
+	{
+		$this->issueDate = $date;
+	}
 
-    public function addEntry(Entry $entry)
-    {
-        $this->entries[] = $entry;
-    }
+	public function setPaidAmount($paid)
+	{
+		$this->paidAmount = $paid;
+	}
 
-    public function getInformations()
-    {
-        return $this->informations;
-    }
+	public function setSeller(Client $seller)
+	{
+		$this->seller = $seller;
+	}
 
-    public function setInformations(array $informations)
-    {
-        $this->informations = $informations;
-    }
+	public function setBuyer(Client $buyer)
+	{
+		$this->buyer = $buyer;
+	}
 
-    public function addInformation($data)
-    {
-        $this->informations[] = $data;
-    }
+	public function setCoupon(Coupon $coupon)
+	{
+		$this->coupon = $coupon;
+	}
 
-    public function clearInformations()
-    {
-        $this->informations = array();
-    }
+	public function addEntry(Entry $entry)
+	{
+		$this->entries[] = $entry;
+	}
+
+	public function getInformations()
+	{
+		return $this->informations;
+	}
+
+	public function setInformations(array $informations)
+	{
+		$this->informations = $informations;
+	}
+
+	public function addInformation($data)
+	{
+		$this->informations[] = $data;
+	}
+
+	public function clearInformations()
+	{
+		$this->informations = array();
+	}
 
 }
